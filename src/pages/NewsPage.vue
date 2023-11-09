@@ -1,8 +1,9 @@
 <template>
-	<div class="news-wrapper" style="color: #000">
+	<div class="news-wrapper">
+		<BreadCrumbs></BreadCrumbs>
 		<div class="container">
 			<div class="news">
-				<h1>Новости</h1>
+				<h2>Новости</h2>
 				<div v-if="isLoading"></div>
 				<div v-else>
 					<div v-for="newPost in newsData.data" :key="newPost.id">
@@ -21,6 +22,7 @@
 <script setup lang="ts">
 import axios from 'axios'
 import { onMounted, ref, Ref } from 'vue'
+import BreadCrumbs from '@/components/BreadCrumbs.vue'
 
 let isLoading = ref(false)
 const newsData: Ref<any> = ref({})
@@ -46,6 +48,7 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .news {
+	color: var(--text);
 	&-wrapper {
 		margin-top: 30px;
 	}

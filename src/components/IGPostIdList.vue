@@ -53,7 +53,6 @@ const store = useIGStore()
 const IGMediaPosts = computed(() => {
 	return store.IGMediaPosts
 })
-console.log(IGMediaPosts)
 
 const isLoading = computed(() => store.isLoading) // Добавляем isLoading
 
@@ -89,6 +88,7 @@ function goToPost(postId: string | number) {
 				justify-content: space-between;
 				width: 100%;
 				transition: 0.3s ease;
+				color: var(--text);
 				&:hover {
 					color: var(--yellow);
 					svg {
@@ -182,7 +182,7 @@ function goToPost(postId: string | number) {
 			width: 15px;
 			height: 15px;
 			margin-right: 4px;
-			fill: #fff;
+			fill: var(--blue);
 			transition: 0.3s ease;
 		}
 		strong {

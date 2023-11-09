@@ -134,10 +134,26 @@ header {
 			text-transform: uppercase;
 			font-weight: bold;
 			transition: 0.15s ease;
+			position: relative;
+			&::before {
+				content: '';
+				position: absolute;
+				display: block;
+				right: 50%;
+				left: 50%;
+				bottom: 0;
+				height: 2px;
+				background-color: var(--yellow);
+				transition: 0.15s ease;
+			}
 		}
 		&:hover {
 			h2 {
 				color: var(--yellow);
+				&::before {
+					left: 0;
+					right: 0;
+				}
 			}
 		}
 	}
@@ -174,12 +190,24 @@ header {
 				text-align: center;
 				font-size: 14px;
 				padding: 7px 8px;
-				box-shadow: 0px 0px 0px #424244;
 				transition: 0.3s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+				position: relative;
+				&::before {
+					content: '';
+					position: absolute;
+					display: block;
+					height: 1px;
+					bottom: 0;
+					left: 50%;
+					right: 50%;
+					background-color: var(--yellow);
+					transition: 0.15s ease;
+				}
 				&:hover {
-					background-color: var(--blue);
-					color: #fff;
-					box-shadow: 0px 0px 2px #424244;
+					&::before {
+						left: 0;
+						right: 0;
+					}
 				}
 			}
 		}

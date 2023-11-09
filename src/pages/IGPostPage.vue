@@ -1,108 +1,105 @@
 <template>
 	<div class="container">
+		<Breadcrumbs />
 		<div class="wrapper-info">
-			<div style="display: flex; justify-content: space-between">
-				<IGPostIdList></IGPostIdList>
-				<div class="ig-post-wrapper card">
-					<div v-if="isLoading" class="loader ig-post">
-						<div class="ig-post__head">
-							<div class="ig-post__head-left">
-								<div class="ig-post__img"></div>
-							</div>
-							<div class="ig-post__caption">
-								<ul>
-									<li></li>
-									<li></li>
-									<li></li>
-								</ul>
-							</div>
+			<IGPostIdList></IGPostIdList>
+			<div class="ig-post-wrapper card">
+				<div v-if="isLoading" class="loader ig-post">
+					<div class="ig-post__head">
+						<div class="ig-post__head-left">
+							<div class="ig-post__img"></div>
 						</div>
-						<div class="ig-post__body">
-							<h2></h2>
+						<div class="ig-post__caption">
 							<ul>
-								<li></li>
-								<li></li>
-								<li></li>
-								<li></li>
 								<li></li>
 								<li></li>
 								<li></li>
 							</ul>
 						</div>
 					</div>
-					<div v-else class="ig-post">
-						<div class="ig-post__head">
-							<div class="ig-post__head-left">
-								<div class="ig-post__img">
-									<img
-										v-if="igPostData.media_type === 'IMAGE'"
-										:src="igPostData.media_url"
-										alt="IMAGE"
-									/>
-									<video
-										v-else-if="igPostData.media_type === 'VIDEO'"
-										muted
-										loop
-										autoplay
-										:src="igPostData.media_url"
-									></video>
-								</div>
-								<a target="_blank" :href="igPostData.permalink"
-									><strong>Открыть в Instagram</strong>
-									<img
-										src="@/assets/images/icon-instagram-cloud.svg"
-										alt="Inst"
-								/></a>
+					<div class="ig-post__body">
+						<h2></h2>
+						<ul>
+							<li></li>
+							<li></li>
+							<li></li>
+							<li></li>
+							<li></li>
+							<li></li>
+							<li></li>
+						</ul>
+					</div>
+				</div>
+				<div v-else class="ig-post">
+					<div class="ig-post__head">
+						<div class="ig-post__head-left">
+							<div class="ig-post__img">
+								<img
+									v-if="igPostData.media_type === 'IMAGE'"
+									:src="igPostData.media_url"
+									alt="IMAGE"
+								/>
+								<video
+									v-else-if="igPostData.media_type === 'VIDEO'"
+									muted
+									loop
+									autoplay
+									:src="igPostData.media_url"
+								></video>
 							</div>
-							<div class="ig-post__caption">
-								<p v-if="igPostData.caption">{{ igPostData.caption }}</p>
-								<p v-else class="ig-post__caption-no">Нет описания</p>
-							</div>
+							<a target="_blank" :href="igPostData.permalink"
+								><strong>Открыть в Instagram</strong>
+								<img src="@/assets/images/icon-instagram-cloud.svg" alt="Inst"
+							/></a>
 						</div>
-						<div class="ig-post__body">
-							<h2>Комментарии ({{ igPostData.comments_count }})</h2>
-							<div class="ig-post__comments" v-if="igPostData.comments">
-								<div
-									v-for="comment in igPostData.comments.data"
-									:key="comment.id"
-									class="ig-post__user"
+						<div class="ig-post__caption">
+							<p v-if="igPostData.caption">{{ igPostData.caption }}</p>
+							<p v-else class="ig-post__caption-no">Нет описания</p>
+						</div>
+					</div>
+					<div class="ig-post__body">
+						<h2>Комментарии ({{ igPostData.comments_count }})</h2>
+						<div class="ig-post__comments" v-if="igPostData.comments">
+							<div
+								v-for="comment in igPostData.comments.data"
+								:key="comment.id"
+								class="ig-post__user"
+							>
+								<a
+									target="_blank"
+									:href="`https://www.instagram.com/${comment.username}`"
+									><strong>{{ comment.username }}</strong></a
 								>
-									<a
-										target="_blank"
-										:href="`https://www.instagram.com/${comment.username}`"
-										><strong>{{ comment.username }}</strong></a
+								<p>{{ comment.text }}</p>
+								<span class="ig-post__user-timestamp">{{
+									formatTimestamp(comment.timestamp)
+								}}</span>
+								<div class="ig-post__replies" v-if="comment.replies">
+									<div
+										v-for="replies in comment.replies.data"
+										:key="replies.id"
+										class="ig-post__user-replies"
 									>
-									<p>{{ comment.text }}</p>
-									<span class="ig-post__user-timestamp">{{
-										formatTimestamp(comment.timestamp)
-									}}</span>
-									<div class="ig-post__replies" v-if="comment.replies">
-										<div
-											v-for="replies in comment.replies.data"
-											:key="replies.id"
-											class="ig-post__user-replies"
+										<a
+											target="_blank"
+											:href="`https://www.instagram.com/${replies.username}`"
+											><strong>{{ replies.username }}</strong></a
 										>
-											<a
-												target="_blank"
-												:href="`https://www.instagram.com/${replies.username}`"
-												><strong>{{ replies.username }}</strong></a
-											>
-											<p>{{ replies.text }}</p>
-											<span class="ig-post__user-timestamp">{{
-												formatTimestamp(replies.timestamp)
-											}}</span>
-										</div>
+										<p>{{ replies.text }}</p>
+										<span class="ig-post__user-timestamp">{{
+											formatTimestamp(replies.timestamp)
+										}}</span>
 									</div>
 								</div>
 							</div>
-							<div v-else style="text-align: center">
-								Комментариев нет.<br /><a
-									target="_blank"
-									:href="igPostData.permalink"
-									style="color: var(--yellow)"
-									>Оставить свой комментарий</a
-								>
-							</div>
+						</div>
+						<div v-else style="text-align: center">
+							Комментариев нет.<br /><a
+								target="_blank"
+								:href="igPostData.permalink"
+								style="color: var(--yellow)"
+								>Оставить свой комментарий</a
+							>
 						</div>
 					</div>
 				</div>
@@ -117,6 +114,7 @@ import axios from 'axios'
 import { graphFB, TOKEN, fieldsStringIGPost } from '@/utils/constants'
 import { useRoute } from 'vue-router'
 import IGPostIdList from '@/components/IGPostIdList.vue'
+import Breadcrumbs from '@/components/BreadCrumbs.vue'
 
 const route = useRoute()
 const id = ref(route.params.id)
@@ -168,8 +166,14 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+.wrapper-info {
+	display: flex;
+	justify-content: space-between;
+}
 .loader {
 	.ig-post {
+		opacity: 0;
+		transition: 1s ease;
 		&__img {
 			opacity: 0.3;
 			position: relative;
@@ -265,6 +269,9 @@ watch(
 	}
 }
 .ig-post {
+	opacity: 1;
+	transition: 1s ease;
+	color: var(--text);
 	&-wrapper {
 		width: calc(100% - 30% - 15px);
 	}
@@ -273,7 +280,7 @@ watch(
 		&-left {
 			a {
 				margin-top: 15px;
-				color: #fff;
+				color: #000;
 				display: flex;
 				align-items: center;
 				justify-content: center;

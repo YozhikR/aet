@@ -194,20 +194,19 @@ onBeforeMount(() => {
 	&__intro {
 		width: 50%;
 		color: #000;
-		margin-top: 43px;
 	}
 }
 
 .main-news {
 	position: relative;
 	h2 {
-		margin-bottom: 60px;
+		margin-bottom: 20px;
 		font-weight: 900;
 		font-size: 42px;
 	}
 	&__list {
 		display: flex;
-		flex-wrap: wrap;
+		flex-direction: column;
 		margin: 0 -12px;
 	}
 	&__item {
@@ -341,9 +340,11 @@ video {
 
 .main-ig-posts {
 	width: 44%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
 	&__btns {
 		display: flex;
-		justify-content: end;
 		button {
 			padding: 4px 4px 4px 8px;
 			display: flex;

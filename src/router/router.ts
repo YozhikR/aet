@@ -14,21 +14,25 @@ const routes: Array<RouteRecordRaw> = [
 		path: '/',
 		name: 'Main',
 		component: Main,
+		meta: { breadcrumb: 'Главная' },
 	},
 	{
 		path: '/instagram',
 		name: 'IGPage',
 		component: IGPage,
+		meta: { breadcrumb: 'Инстаграм' },
 	},
 	{
 		path: '/posts',
 		name: 'NewsPage',
 		component: NewsPage,
+		meta: { breadcrumb: 'Новости' },
 	},
 	{
 		path: '/instagram/:id',
 		name: 'IGPostPage',
 		component: IGPostPage,
+		meta: { breadcrumb: 'Инстаграм пост' },
 	},
 	{
 		path: '/documents',

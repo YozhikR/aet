@@ -3,9 +3,12 @@
 		<div class="wrapper-in">
 			<NavBar />
 			<main>
-				<router-view />
+				<router-view v-slot="{ Component }">
+					<transition name="fade" mode="out-in">
+						<component :is="Component" />
+					</transition>
+				</router-view>
 			</main>
-			<!-- <BusLoader></BusLoader> -->
 			<NavFooter />
 		</div>
 	</div>
@@ -14,14 +17,13 @@
 <script lang="ts" setup>
 import NavBar from '@/components/NavBar.vue'
 import NavFooter from '@/components/NavFooter.vue'
-// import BusLoader from '@/components/BusLoader.vue'
 </script>
 
 <style>
 @import '@/assets/styles/reset.css';
 @import '@/assets/styles/fonts.css';
 :root {
-	--raleway: 'Raleway', sans-serif;
+	--font-family: 'Roboto', sans-serif;
 	--text: #424242;
 	--yellow: #ffd95b;
 	--blue: #00577c;
@@ -29,40 +31,24 @@ import NavFooter from '@/components/NavFooter.vue'
 }
 html {
 	color: #fff;
-	/* background: rgba(0, 65, 91, 1); */
-	/* background-repeat: no-repeat; */
-	/* background: linear-gradient(245deg, #00405b, #005d84f2, #00405b, #005d84f2); */
-	/* animation: gradient 15s ease infinite; */
-	/* background-size: 400% 400%; */
 }
-/* @keyframes gradient {
-	0% {
-		background-position: 0 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
-} */
+
 .wrapper,
 html,
 body {
 	height: 120vh;
-	font-family: var(--raleway);
+	font-family: var(--font-family);
 	font-weight: 500;
-	overflow: hidden;
 }
 .wrapper-info {
 	margin-top: 15px;
 	margin-bottom: 30px;
 }
 .card {
-	background: var(--blue-opacity);
+	/* background: var(--blue-opacity); */
 	border-radius: 8px;
 	padding: 15px;
-	/* box-shadow: 0 1px 5px 2px rgba(0, 0, 0, 0.2); */
+	box-shadow: 0 1px 5px 2px rgba(0, 0, 0, 0.2);
 }
 
 .wrapper-in {
@@ -71,7 +57,7 @@ body {
 	min-height: 120vh;
 	flex-direction: column;
 	justify-content: space-between;
-	/* overflow: hidden; */
+	overflow-x: hidden;
 }
 main {
 	flex: 1;
@@ -101,5 +87,16 @@ h1 {
 }
 a {
 	color: #fff;
+}
+
+/* Animation router-view */
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+	opacity: 0;
 }
 </style>
